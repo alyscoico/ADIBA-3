@@ -1,647 +1,237 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Paguyuban ADIBA 3</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap">
-<style>
-/* Layout: satu kolom lebar 960px. Ringkasan angka di atas, alat cari/filter, lalu daftar rumah.
-   Setiap rumah ditandai plat nomor (Blok-Nomor) seperti papan nomor rumah di gerbang cluster. */
-:root {
-  --bg: #eef2ef;
-  --surface: #ffffff;
-  --ink: #14231d;
-  --muted: #55665e;
-  --line: #d3ddd7;
-  --accent: #1b6b55;
-  --accent-ink: #ffffff;
-  --accent-soft: #dcede6;
-  --ok: #1d7a4b;
-  --ok-soft: #dcf0e4;
-  --warn: #8f5a00;
-  --warn-soft: #f7ebd0;
-  --idle: #5d646b;
-  --idle-soft: #e6e9ec;
-  --danger: #b3261e;
-  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e1512;
-    --surface: #16201b;
-    --ink: #e6efea;
-    --muted: #94a69c;
-    --line: #27362f;
-    --accent: #5fc4a0;
-    --accent-ink: #07201a;
-    --accent-soft: #1c3a2f;
-    --ok: #6fd69a;
-    --ok-soft: #1a3527;
-    --warn: #e7b25a;
-    --warn-soft: #3a2d12;
-    --idle: #a3abb3;
-    --idle-soft: #262d33;
-    --danger: #ff8a80;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0e1512;
-  --surface: #16201b;
-  --ink: #e6efea;
-  --muted: #94a69c;
-  --line: #27362f;
-  --accent: #5fc4a0;
-  --accent-ink: #07201a;
-  --accent-soft: #1c3a2f;
-  --ok: #6fd69a;
-  --ok-soft: #1a3527;
-  --warn: #e7b25a;
-  --warn-soft: #3a2d12;
-  --idle: #a3abb3;
-  --idle-soft: #262d33;
-  --danger: #ff8a80;
-  color-scheme: dark;
-}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Portal - BMI Taekwondo Academy</title>
 
-* { box-sizing: border-box; }
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.5;
-  padding-block: 24px 48px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-.wrap { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
-button, input, select, textarea { font: inherit; color: inherit; }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="index.css">
 
-/* Header */
-.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
-.eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-h1 { font-family: var(--font-display); font-size: clamp(30px, 6vw, 44px); line-height: 1.05; margin: 4px 0 0; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
-.sub { color: var(--muted); font-size: 13px; }
-.role { font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
-.role.read { background: var(--idle-soft); color: var(--idle); }
+    
+</head>
+<body>
+  
+  <audio id="coachAudio" src="https://github.com/tempayanpapaya-coder/Komponen/raw/refs/heads/main/sang_penakluk.mp3" loop></audio>
 
-/* Ringkasan */
-.stats { display: flex; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
-.stat { flex: 1 1 130px; padding: 14px 18px; border-left: 1px solid var(--line); min-width: 0; }
-.stat:first-child { border-left: 0; }
-.stat .n { font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 1.1; font-variant-numeric: tabular-nums; }
-.stat .l { font-size: 12px; color: var(--muted); }
-@media (max-width: 560px) {
-  .stat { flex-basis: 45%; border-left: 0; border-top: 1px solid var(--line); }
-  .stat:nth-child(-n+2) { border-top: 0; }
-  .stat:nth-child(even) { border-left: 1px solid var(--line); }
-}
+<div class="topbar">
 
-/* Alat */
-.tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.tools .grow { flex: 1 1 240px; min-width: 0; }
-.field, .tools input[type="search"], .tools select {
-  background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; min-width: 0;
-}
-.tools select { width: auto; flex: 0 1 auto; }
-.btn { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 9px 14px; font-weight: 600; cursor: pointer; }
-.btn:hover { border-color: var(--accent); }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.btn.primary:hover { filter: brightness(1.08); }
-.btn.small { padding: 5px 10px; font-size: 13px; }
-.btn.danger { color: var(--danger); }
-.btn:disabled { opacity: 0.55; cursor: default; }
-.spacer { flex: 1 1 0; }
+    <div class="topbar-overlay"></div>
 
-/* Daftar */
-.note { font-size: 13px; color: var(--muted); padding: 10px 14px; border: 1px dashed var(--line); border-radius: 8px; }
-.note.err { color: var(--danger); border-color: var(--danger); }
-.list { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.thead, .row {
-  display: grid;
-  grid-template-columns: 96px minmax(0, 1.7fr) minmax(0, 1.1fr) 124px 72px 64px;
-  gap: 8px 16px; align-items: center; padding: 12px 16px;
-}
-.thead { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--accent-soft); padding-block: 9px; }
-ul.rows { list-style: none; margin: 0; padding: 0; }
-.row { border-top: 1px solid var(--line); }
-.plate {
-  display: inline-block; justify-self: start; font-family: var(--font-mono); font-weight: 600; font-size: 14px; letter-spacing: 0.05em;
-  border: 2px solid var(--accent); color: var(--accent); border-radius: 5px; padding: 3px 9px; background: var(--surface);
-}
-.who { min-width: 0; }
-.nama { font-weight: 600; overflow-wrap: anywhere; }
-.who .sub { overflow-wrap: anywhere; }
-.tel { display: flex; align-items: center; gap: 6px; min-width: 0; flex-wrap: wrap; }
-.mono { font-family: var(--font-mono); font-size: 13px; overflow-wrap: anywhere; }
-.copy { background: transparent; border: 1px solid var(--line); border-radius: 6px; font-size: 12px; padding: 1px 7px; cursor: pointer; color: var(--muted); }
-.copy:hover { border-color: var(--accent); color: var(--accent); }
-.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
-.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-.pill.dihuni { background: var(--ok-soft); color: var(--ok); }
-.pill.kontrak { background: var(--warn-soft); color: var(--warn); }
-.pill.kosong { background: var(--idle-soft); color: var(--idle); }
-.jw { font-variant-numeric: tabular-nums; font-size: 13px; }
-.act { justify-self: end; }
-.empty { padding: 36px 20px; text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; }
-.empty h2 { font-family: var(--font-display); font-size: 22px; margin: 0; }
-.empty p { margin: 0; color: var(--muted); max-width: 46ch; }
-.empty .plate { opacity: 0.6; }
+    <div class="brand-area">
+       <div class="logo-wrap">
 
-@media (max-width: 720px) {
-  .thead { display: none; }
-  .row { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "plate who st" "plate tel jw" "act act act"; align-items: start; }
-  .plate { grid-area: plate; }
-  .who { grid-area: who; }
-  .st { grid-area: st; justify-self: end; }
-  .tel { grid-area: tel; }
-  .jw { grid-area: jw; justify-self: end; }
-  .act { grid-area: act; justify-self: start; }
-}
+    <div class="gear gear-back"></div>
 
-/* Dialog */
-.overlay { position: fixed; inset: 0; z-index: 20; background: rgba(8, 14, 11, 0.55); display: grid; place-items: center; padding: 16px; overflow-y: auto; }
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; width: min(560px, 100%); padding: 20px; display: flex; flex-direction: column; gap: 14px; max-height: calc(100% - 8px); overflow-y: auto; }
-.panel h2 { font-family: var(--font-display); font-size: 22px; margin: 0; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 480px) { .grid2 { grid-template-columns: 1fr; } }
-label.f { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; min-width: 0; }
-label.f .hint { font-weight: 400; color: var(--muted); }
-textarea.field { min-height: 120px; resize: vertical; font-family: var(--font-mono); font-size: 13px; }
-.form-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.msg { font-size: 13px; color: var(--muted); min-height: 1.4em; }
-.msg.err { color: var(--danger); }
+    <div class="gear gear-front"></div>
 
-/* Toast */
-.toastwrap { position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; padding: 12px 16px calc(16px + env(safe-area-inset-bottom, 0px)); pointer-events: none; z-index: 30; }
-.toast { background: var(--ink); color: var(--bg); border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 600; }
+    <div class="gear-center"></div>
 
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
-</style>
+    <img src="https://raw.githubusercontent.com/tempayanpapaya-coder/BMI/refs/heads/main/ChatGPT%20Image%2012%20Mei%202026%2C%2016.20.14..png" class="logo">
 
-<div class="wrap">
-  <header class="top">
-    <div>
-      <div class="eyebrow">Perumahan ADIBA 3</div>
-      <h1>Paguyuban ADIBA 3</h1>
-      <div class="sub">Data warga dan rumah</div>
-    </div>
-    <span class="role read" id="role" hidden></span>
-  </header>
-
-  <section class="stats" aria-label="Ringkasan">
-    <div class="stat"><div class="n" id="s-total">0</div><div class="l">Rumah terdata</div></div>
-    <div class="stat"><div class="n" id="s-dihuni">0</div><div class="l">Dihuni pemilik</div></div>
-    <div class="stat"><div class="n" id="s-kontrak">0</div><div class="l">Dikontrakkan</div></div>
-    <div class="stat"><div class="n" id="s-kosong">0</div><div class="l">Kosong</div></div>
-    <div class="stat"><div class="n" id="s-jiwa">0</div><div class="l">Jiwa tercatat</div></div>
-  </section>
-
-  <section class="tools" aria-label="Cari dan filter">
-    <div class="grow"><input type="search" id="q" placeholder="Cari nama, blok, nomor rumah, atau telepon" aria-label="Cari warga"></div>
-    <select id="f-blok" aria-label="Filter blok"><option value="">Semua blok</option></select>
-    <select id="f-status" aria-label="Filter status">
-      <option value="">Semua status</option>
-      <option value="dihuni">Dihuni pemilik</option>
-      <option value="kontrak">Dikontrakkan</option>
-      <option value="kosong">Kosong</option>
-    </select>
-    <span class="spacer"></span>
-    <button class="btn" type="button" id="b-export" hidden>Unduh CSV</button>
-    <button class="btn" type="button" id="b-import" hidden>Impor daftar</button>
-    <button class="btn primary" type="button" id="b-add" hidden>Tambah rumah</button>
-  </section>
-
-  <div class="note" id="note" role="status">Memuat data warga…</div>
-
-  <section class="list" id="list" hidden aria-label="Daftar rumah">
-    <div class="thead" aria-hidden="true">
-      <span>Rumah</span><span>Kepala keluarga</span><span>Telepon</span><span>Status</span><span>Penghuni</span><span></span>
-    </div>
-    <ul class="rows" id="rows"></ul>
-  </section>
-  <div class="sub" id="count"></div>
 </div>
 
-<!-- Form rumah -->
-<div class="overlay" id="ov-form" hidden>
-  <form class="panel" id="form" autocomplete="off" aria-labelledby="form-title">
-    <h2 id="form-title">Tambah rumah</h2>
-    <div class="grid2">
-      <label class="f" for="i-blok">Blok<input class="field" id="i-blok" maxlength="8" placeholder="mis. A" required></label>
-      <label class="f" for="i-nomor">Nomor rumah<input class="field" id="i-nomor" maxlength="8" placeholder="mis. 12" required></label>
+        <div>
+            <div class="brand-badge">OFFICIAL MEMBER PORTAL</div>
+
+            <div class="brand-title">
+                BMI TAEKWONDO
+                <span>ACADEMY</span>
+            </div>
+
+            <div class="brand-sub">
+                Discipline • Honor • Excellence
+            </div>
+
+            <div class="header-stats">
+                <div class="stat-card">
+                    <div class="stat-number">MFT</div>
+                    <div class="stat-label">Level akan hadir...</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">SPEED</div>
+                    <div class="stat-label">Level akan hadir...</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">POWER</div>
+                    <div class="stat-label">Level akan hadir...</div>
+                </div>
+                 <div class="stat-card">
+                    <div class="stat-number">SMART</div>
+                    <div class="stat-label">Level akan hadir...</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <label class="f" for="i-kepala">Kepala keluarga<input class="field" id="i-kepala" maxlength="80" placeholder="Nama lengkap"></label>
-    <div class="grid2">
-      <label class="f" for="i-telepon">Telepon / WhatsApp<input class="field" id="i-telepon" inputmode="tel" maxlength="20" placeholder="08xxxxxxxxxx"></label>
-      <label class="f" for="i-jumlah">Jumlah penghuni<input class="field" id="i-jumlah" type="number" min="0" max="30" value="0"></label>
+
+
+
+    <div class="header-right">
+        <div class="live-box">
+            <div class="dot"></div>
+            SYSTEM ONLINE
+        </div>
+
+       <button class="hero-btn" onclick="toggleCoachMessage(true)">
+    MEMBER AREA
+</button>
     </div>
-    <div class="grid2">
-      <label class="f" for="i-status">Status rumah
-        <select class="field" id="i-status">
-          <option value="dihuni">Dihuni pemilik</option>
-          <option value="kontrak">Dikontrakkan</option>
-          <option value="kosong">Kosong</option>
-        </select>
-      </label>
-      <label class="f" for="i-jabatan">Jabatan di paguyuban <span class="hint">(boleh kosong)</span>
-        <input class="field" id="i-jabatan" list="jabatan-list" maxlength="40" placeholder="mis. Bendahara">
-      </label>
+
+</div>
+  <button class="btn-game-float" onclick="toggleGame(true)">
+    🎮 Main Puzzle
+</button>
+
+<div id="modalGame" class="modal-game">
+    <div class="modal-game-content">
+        <div class="close-game" onclick="toggleGame(false)">&times;</div>
+        <iframe src="https://tempayanpapaya-coder.github.io/BMI/Puzle.html" class="game-frame"></iframe>
     </div>
-    <datalist id="jabatan-list">
-      <option value="Ketua"></option><option value="Wakil Ketua"></option><option value="Sekretaris"></option><option value="Bendahara"></option><option value="Seksi Keamanan"></option><option value="Seksi Kebersihan"></option>
-    </datalist>
-    <label class="f" for="i-catatan">Catatan <span class="hint">(boleh kosong)</span>
-      <textarea class="field" id="i-catatan" maxlength="200" style="min-height:64px;font-family:inherit;font-size:inherit" placeholder="mis. penghuni baru sejak Januari"></textarea>
-    </label>
-    <div class="msg" id="form-msg" role="status"></div>
-    <div class="form-actions">
-      <button class="btn primary" type="submit" id="b-save">Simpan</button>
-      <button class="btn" type="button" id="b-cancel">Batal</button>
-      <span class="spacer"></span>
-      <button class="btn danger" type="button" id="b-delete" hidden>Hapus rumah</button>
-    </div>
-  </form>
 </div>
 
-<!-- Impor -->
-<div class="overlay" id="ov-import" hidden>
-  <div class="panel" role="dialog" aria-labelledby="imp-title">
-    <h2 id="imp-title">Impor daftar rumah</h2>
-    <p class="sub" style="margin:0">Tempel satu rumah per baris, dipisah koma, titik koma, atau tab. Urutan kolom: blok, nomor, kepala keluarga, telepon, jumlah penghuni, status (dihuni, kontrak, atau kosong). Dua kolom terakhir boleh dikosongkan. Rumah yang sudah ada dilewati.</p>
-    <label class="f" for="imp-text">Daftar
-      <textarea class="field" id="imp-text" placeholder="A, 1, Nama Kepala Keluarga, 08xxxxxxxxxx, 4, dihuni"></textarea>
-    </label>
-    <div class="msg" id="imp-msg" role="status"></div>
-    <div class="form-actions">
-      <button class="btn primary" type="button" id="b-imp-run" disabled>Impor</button>
-      <button class="btn" type="button" id="b-imp-close">Tutup</button>
+<div class="container">
+    <div id="loginSection" class="login-box">
+        <h1>Member Login</h1>
+        <p class="subtitle">BMI Taekwondo Academy</p>
+        <input type="text" id="userInp" placeholder="Username">
+        <input type="password" id="passInp" placeholder="Password">
+
+        <div class="forgot-box">
+            <a href="https://wa.me/6285741163911?text=Shabeum,%20saya%20lupa%20username%20dan%20Password%20untuk%20aplikasi%20BMI%20,%20mohon%20untuk%20di%20kirim%20ke%20saya%20lagi%20agar%20saya%20bisa%20masuk%20ke%20aplikasi%20BMI%20kembali%20🙏" target="_blank" class="forgot-link">Lupa Username & Password?</a>
+        </div>
+
+        <button class="btn btn-login" onclick="login()">Masuk ke Dashboard</button>
+        
+        <button class="btn-register-trigger" onclick="toggleRegister(true)">📝 Pendaftaran Member Baru</button>
     </div>
-  </div>
+
+    <div id="modalRegister" class="modal-register">
+        <div class="modal-register-content">
+            <span class="close-register" onclick="toggleRegister(false)">&times;</span>
+            <h2>Formulir Pendaftaran</h2>
+            <p class="subtitle" style="margin-bottom: 20px;">Silakan lengkapi data calon member baru</p>
+            
+            <label class="reg-label">Nama Lengkap</label>
+            <input type="text" id="regNama" placeholder="Contoh: Raden Wijaya">
+            
+            <label class="reg-label">Berat Badan (kg)</label>
+            <input type="number" id="regBerat" placeholder="Contoh: 55">
+            
+            <label class="reg-label">Tinggi Badan (cm)</label>
+            <input type="number" id="regTinggi" placeholder="Contoh: 165">
+            
+            <label class="reg-label">Tanggal Lahir</label>
+            <input type="date" id="regTglLahir">
+            
+            <label class="reg-label">Warna Sabuk Awal</label>
+            <select id="regSabuk">
+                <option value="Putih">Putih</option>
+                <option value="Kuning">Kuning</option>
+                <option value="Hijau">Hijau</option>
+                <option value="Biru">Biru</option>
+                <option value="Merah">Merah</option>
+                <option value="Hitam">Hitam</option>
+            </select>
+
+            <button class="btn btn-register-submit" style="margin-top: 10px;" onclick="kirimPendaftaranWA()">Kirim & Daftarkan Anggota via WA</button>
+        </div>
+    </div>
+
+    <div id="profileSection" class="profile-box">
+        <h1 id="welcomeName" style="color: #fff;">Halo!</h1>
+        <p class="subtitle" id="memberUser" style="color:#e9c48f; font-weight:700;"></p>
+
+        <div id="alertBox" style="display:none;" class="notif-alert">
+            ⚠️ Perhatian: Anda memiliki tunggakan kewajiban!
+        </div>
+
+        <a href="https://raw.githubusercontent.com/tempayanpapaya-coder/Komponen/refs/heads/main/Brosur%20baru.png" class="btn-download-brosur">Download Brosur dan bagikan ke Sosial Media</a>
+
+        <div class="info-card">
+            <div class="info-row"><span class="label">Status kewajiban</span><span id="statusTag"></span></div>
+            <div class="info-row">
+                <span class="label">Jenis Pembayaran</span>
+                <span class="val" style="color:var(--primary2)">Kas Mingguan • Rp5.000</span>
+            </div>
+            <div class="info-row"><span class="label">Warna Sabuk</span><span class="val" id="valSabuk">-</span></div>
+            <div class="info-row"><span class="label">Tgl Lahir</span><span class="val" id="valTgl">-</span></div>
+            <div class="info-row"><span class="label">WhatsApp</span><span class="val" id="valWA">-</span></div>
+            <div class="info-row"><span class="label">Fisik (Berat/Tinggi)</span><span class="val" id="valFisik">-</span></div>
+            <div class="info">
+                <div class="schedule-box">
+                    <div class="schedule-title">📅 Jadwal Latihan</div>
+                    <button class="btn-show-jadwal" onclick="toggleJadwal(true)">
+                        <span>JADWAL LATIHAN</span>
+                    </button>
+                    <div class="izin-box">
+                        <div class="izin-text">Jika hari ini mau ijin tidak berangkat latihan</div>
+                        <a href="https://wa.me/+62882003007515?text=Shabum%20Widya%20yang%20Cantik,%20Maaf%20hari%20ini%20anak%20saya%20ijin%20tidak%20bisa%20Hadir%20mengikuti%20latihan,%20harap%20di%20maklumi%20ya%20Shabeum" target="_blank" class="btn-izin">KLIK IJIN</a>
+                    </div>
+                    <div id="modalJadwal" class="modal-jadwal">
+                        <div class="modal-jadwal-content">
+                            <span class="close-jadwal" onclick="toggleJadwal(false)">&times;</span>
+                            <h2 style="margin-bottom: 25px; color: #e9c48f; font-weight: 900;">Master Schedule</h2>
+                            <div id="jadwal"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-box">
+            <div class="payment-title">📌 KAS di bayar pada </div>
+            <div id="paymentStatus"></div>
+            
+            <div class="history-title">📜 Catatan & Riwayat Kas</div>
+            <div id="historyContainer"></div>
+        </div>
+
+        <button class="btn" style="background:#4a3728; color:#f5f2eb; margin-top:20px; border:1px solid var(--border);" onclick="logout()">Keluar</button>
+    </div>
 </div>
 
-<div class="toastwrap"><div class="toast" id="toast" hidden></div></div>
+<div class="footer-pro">
+    <div class="footer-title">BMI TAEKWONDO ACADEMY</div>
+    <div class="footer-sub">Vini • Vidi • Vici</div>
+    <div class="footer-copy">© 2026 All Rights Reserved</div>
+</div>
 
-<script>
-(function () {
-  'use strict';
-  var $ = function (s) { return document.querySelector(s); };
-  var STATUS = { dihuni: 'Dihuni pemilik', kontrak: 'Dikontrakkan', kosong: 'Kosong' };
+<!-- ========================= -->
+<!-- COACH MESSAGE MODAL -->
+<!-- ========================= -->
 
-  var db = null, dl = null, isAdmin = false;
-  var items = [], loaded = false, loadTimer = null;
-  var editingId = null, deleteArmed = false, busy = false;
+<div id="coachModal" class="coach-modal">
 
-  function h(tag, props) {
-    var e = document.createElement(tag);
-    if (props) for (var k in props) {
-      var v = props[k];
-      if (v == null || v === false) continue;
-      if (k === 'class') e.className = v;
-      else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), v);
-      else e.setAttribute(k, v === true ? '' : v);
-    }
-    for (var i = 2; i < arguments.length; i++) {
-      var kids = [].concat(arguments[i]);
-      for (var j = 0; j < kids.length; j++) {
-        var c = kids[j];
-        if (c == null || c === false) continue;
-        e.append(c.nodeType ? c : document.createTextNode(String(c)));
-      }
-    }
-    return e;
-  }
+    <div class="coach-canvas">
 
-  function toast(text) {
-    var t = $('#toast');
-    t.textContent = text; t.hidden = false;
-    clearTimeout(toast._t);
-    toast._t = setTimeout(function () { t.hidden = true; }, 2200);
-  }
+        <div class="coach-glow"></div>
 
-  function errMsg(e) {
-    var c = e && e.code;
-    if (c === 'invalid_argument') return 'Akun ini tidak punya izin mengubah data. Hanya pengurus yang bisa.';
-    if (c === 'quota_exceeded') return 'Penyimpanan data penuh. Hapus data yang tidak dipakai lalu coba lagi.';
-    if (c === 'resource_exhausted') return 'Terlalu banyak permintaan. Tunggu sebentar lalu coba lagi.';
-    if (c === 'revoked') return 'Akses ke data dicabut. Muat ulang halaman.';
-    return 'Data belum tersimpan. Coba lagi sebentar lagi.';
-  }
+        <span class="coach-close" onclick="toggleCoachMessage(false)">
+            &times;
+        </span>
 
-  function clean(s) { return String(s || '').replace(/[^A-Za-z0-9_.~:@+-]/g, ''); }
-  function idOf(blok, nomor) { return blok + '-' + nomor; }
-  function normStatus(s) {
-    s = String(s || '').toLowerCase();
-    if (s.indexOf('kontrak') >= 0) return 'kontrak';
-    if (s.indexOf('kosong') >= 0) return 'kosong';
-    return 'dihuni';
-  }
+        <div class="coach-title">
+            PESAN DARI PELATIH
+        </div>
 
-  function sorted(list) {
-    return list.slice().sort(function (a, b) {
-      var c = String(a.blok).localeCompare(String(b.blok), 'id');
-      if (c) return c;
-      return String(a.nomor).localeCompare(String(b.nomor), 'id', { numeric: true });
-    });
-  }
+        <div class="coach-line"></div>
 
-  /* ---------- Render ---------- */
-  function renderStats() {
-    var c = { dihuni: 0, kontrak: 0, kosong: 0 }, jiwa = 0;
-    items.forEach(function (it) {
-      if (c[it.status] != null) c[it.status]++;
-      jiwa += Number(it.jumlah) || 0;
-    });
-    $('#s-total').textContent = items.length;
-    $('#s-dihuni').textContent = c.dihuni;
-    $('#s-kontrak').textContent = c.kontrak;
-    $('#s-kosong').textContent = c.kosong;
-    $('#s-jiwa').textContent = jiwa;
-  }
+        <div class="coach-message">
+            Akan segera hadir...
+            <br><br>
+            nantinya pesan ini berisi tentang catatan kemampuan atlit sebagai evaluasi.
+        </div>
+    </div>
+</div>
 
-  function renderBlokFilter() {
-    var sel = $('#f-blok'), cur = sel.value;
-    var bloks = [];
-    items.forEach(function (it) { if (bloks.indexOf(it.blok) < 0) bloks.push(it.blok); });
-    bloks.sort(function (a, b) { return String(a).localeCompare(String(b), 'id'); });
-    sel.textContent = '';
-    sel.append(h('option', { value: '' }, 'Semua blok'));
-    bloks.forEach(function (b) { sel.append(h('option', { value: b }, 'Blok ' + b)); });
-    sel.value = bloks.indexOf(cur) >= 0 ? cur : '';
-  }
 
-  function copyBtn(text) {
-    return h('button', {
-      class: 'copy', type: 'button', 'aria-label': 'Salin nomor ' + text,
-      onclick: function () {
-        try {
-          navigator.clipboard.writeText(text).then(function () { toast('Nomor disalin'); }, function () { toast('Salin manual: pilih nomornya'); });
-        } catch (e) { toast('Salin manual: pilih nomornya'); }
-      }
-    }, 'Salin');
-  }
-
-  function rowEl(it) {
-    return h('li', { class: 'row' },
-      h('span', { class: 'plate' }, it.blok + '-' + it.nomor),
-      h('div', { class: 'who' },
-        h('div', { class: 'nama' }, it.kepala || 'Belum diisi'),
-        it.jabatan ? h('div', { class: 'sub' }, it.jabatan) : null,
-        it.catatan ? h('div', { class: 'sub' }, it.catatan) : null),
-      h('div', { class: 'tel' },
-        it.telepon ? [h('span', { class: 'mono' }, it.telepon), copyBtn(it.telepon)] : h('span', { class: 'sub' }, 'Tanpa nomor')),
-      h('div', { class: 'st' }, h('span', { class: 'pill ' + it.status }, STATUS[it.status] || it.status)),
-      h('div', { class: 'jw' }, Number(it.jumlah) ? it.jumlah + ' jiwa' : '–'),
-      isAdmin ? h('div', { class: 'act' }, h('button', { class: 'btn small', type: 'button', onclick: function () { openForm(it); } }, 'Ubah')) : null
-    );
-  }
-
-  function emptyState() {
-    return h('div', { class: 'empty' },
-      h('span', { class: 'plate' }, 'A-1'),
-      h('h2', null, 'Belum ada data rumah'),
-      h('p', null, isAdmin
-        ? 'Tambahkan rumah pertama, atau tempel daftar dari spreadsheet lewat Impor daftar.'
-        : 'Pengurus belum mengisi data. Data akan tampil di sini setelah diisi.'));
-  }
-
-  function render() {
-    renderStats();
-    renderBlokFilter();
-    var q = $('#q').value.trim().toLowerCase();
-    var fb = $('#f-blok').value, fs = $('#f-status').value;
-    var all = sorted(items);
-    var shown = all.filter(function (it) {
-      if (fb && it.blok !== fb) return false;
-      if (fs && it.status !== fs) return false;
-      if (!q) return true;
-      var hay = [it.blok + '-' + it.nomor, it.blok + ' ' + it.nomor, it.kepala, it.telepon, it.jabatan, it.catatan].join(' ').toLowerCase();
-      return hay.indexOf(q) >= 0;
-    });
-    var list = $('#list'), rows = $('#rows');
-    rows.textContent = '';
-    if (!loaded) { list.hidden = true; $('#count').textContent = ''; return; }
-    list.hidden = false;
-    if (!all.length) {
-      $('.thead').hidden = true;
-      rows.append(h('li', null, emptyState()));
-      $('#count').textContent = '';
-    } else if (!shown.length) {
-      $('.thead').hidden = false;
-      rows.append(h('li', { class: 'row' }, h('div', { class: 'sub' }, 'Tidak ada rumah yang cocok dengan pencarian.')));
-      $('#count').textContent = 'Menampilkan 0 dari ' + all.length + ' rumah';
-    } else {
-      $('.thead').hidden = false;
-      shown.forEach(function (it) { rows.append(rowEl(it)); });
-      $('#count').textContent = 'Menampilkan ' + shown.length + ' dari ' + all.length + ' rumah';
-    }
-    $('#b-export').hidden = !(isAdmin && dl && items.length);
-  }
-
-  function setNote(text, isErr) {
-    var n = $('#note');
-    if (!text) { n.hidden = true; return; }
-    n.hidden = false; n.textContent = text;
-    n.className = 'note' + (isErr ? ' err' : '');
-  }
-
-  /* ---------- Form ---------- */
-  function openForm(it) {
-    editingId = it ? it.id : null;
-    deleteArmed = false;
-    $('#form-title').textContent = it ? 'Ubah data rumah ' + it.blok + '-' + it.nomor : 'Tambah rumah';
-    $('#i-blok').value = it ? it.blok : ($('#f-blok').value || '');
-    $('#i-nomor').value = it ? it.nomor : '';
-    $('#i-kepala').value = it ? (it.kepala || '') : '';
-    $('#i-telepon').value = it ? (it.telepon || '') : '';
-    $('#i-jumlah').value = it ? (Number(it.jumlah) || 0) : 0;
-    $('#i-status').value = it ? it.status : 'dihuni';
-    $('#i-jabatan').value = it ? (it.jabatan || '') : '';
-    $('#i-catatan').value = it ? (it.catatan || '') : '';
-    $('#b-delete').hidden = !it;
-    $('#b-delete').textContent = 'Hapus rumah';
-    setFormMsg('', false);
-    $('#ov-form').hidden = false;
-    $('#i-blok').focus();
-  }
-  function closeForm() { $('#ov-form').hidden = true; editingId = null; }
-  function setFormMsg(t, err) { var m = $('#form-msg'); m.textContent = t; m.className = 'msg' + (err ? ' err' : ''); }
-  function setBusy(v) { busy = v; $('#b-save').disabled = v; $('#b-delete').disabled = v; }
-
-  async function saveForm(ev) {
-    ev.preventDefault();
-    if (busy || !db) return;
-    var blok = clean($('#i-blok').value).toUpperCase();
-    var nomor = clean($('#i-nomor').value).toUpperCase();
-    if (!blok || !nomor) { setFormMsg('Isi blok dan nomor rumah. Hanya huruf, angka, dan tanda hubung.', true); return; }
-    var id = idOf(blok, nomor);
-    if (id !== editingId && items.some(function (i) { return i.id === id; })) {
-      setFormMsg('Rumah ' + blok + '-' + nomor + ' sudah ada. Pilih Ubah pada daftar untuk mengeditnya.', true); return;
-    }
-    var jumlah = parseInt($('#i-jumlah').value, 10);
-    var data = {
-      blok: blok, nomor: nomor,
-      kepala: $('#i-kepala').value.trim(),
-      telepon: $('#i-telepon').value.trim(),
-      jumlah: isNaN(jumlah) ? 0 : Math.max(0, Math.min(30, jumlah)),
-      status: normStatus($('#i-status').value),
-      jabatan: $('#i-jabatan').value.trim(),
-      catatan: $('#i-catatan').value.trim(),
-      diubah: new Date().toISOString()
-    };
-    setBusy(true); setFormMsg('Menyimpan…', false);
-    try {
-      await db.doc('rumah/' + id).set(data);
-      if (editingId && editingId !== id) await db.doc('rumah/' + editingId).delete();
-      closeForm(); toast('Data rumah ' + blok + '-' + nomor + ' tersimpan');
-    } catch (e) { setFormMsg(errMsg(e), true); }
-    setBusy(false);
-  }
-
-  async function deleteHouse() {
-    if (busy || !db || !editingId) return;
-    var btn = $('#b-delete');
-    if (!deleteArmed) { deleteArmed = true; btn.textContent = 'Yakin hapus? Klik lagi'; return; }
-    setBusy(true);
-    try {
-      await db.doc('rumah/' + editingId).delete();
-      closeForm(); toast('Rumah dihapus');
-    } catch (e) { setFormMsg(errMsg(e), true); deleteArmed = false; btn.textContent = 'Hapus rumah'; }
-    setBusy(false);
-  }
-
-  /* ---------- Impor ---------- */
-  function parseImport(text) {
-    var rows = [], bad = 0, seen = {};
-    text.split(/\r?\n/).forEach(function (line) {
-      if (!line.trim()) return;
-      var sep = line.indexOf('\t') >= 0 ? '\t' : (line.indexOf(';') >= 0 ? ';' : ',');
-      var p = line.split(sep).map(function (x) { return x.trim(); });
-      var blok = clean(p[0]).toUpperCase(), nomor = clean(p[1]).toUpperCase();
-      if (!blok || !nomor || seen[idOf(blok, nomor)]) { bad++; return; }
-      seen[idOf(blok, nomor)] = 1;
-      var j = parseInt(p[4], 10);
-      rows.push({
-        id: idOf(blok, nomor), blok: blok, nomor: nomor,
-        kepala: p[2] || '', telepon: p[3] || '',
-        jumlah: isNaN(j) ? 0 : Math.max(0, Math.min(30, j)),
-        status: normStatus(p[5]), jabatan: '', catatan: '',
-        diubah: new Date().toISOString()
-      });
-    });
-    return { rows: rows, bad: bad };
-  }
-
-  function previewImport() {
-    var r = parseImport($('#imp-text').value);
-    var exist = r.rows.filter(function (x) { return items.some(function (i) { return i.id === x.id; }); }).length;
-    var m = $('#imp-msg');
-    if (!$('#imp-text').value.trim()) { m.textContent = ''; m.className = 'msg'; $('#b-imp-run').disabled = true; return; }
-    var fresh = r.rows.length - exist;
-    m.className = 'msg';
-    m.textContent = fresh + ' rumah baru siap diimpor' + (exist ? ', ' + exist + ' sudah ada dan dilewati' : '') + (r.bad ? ', ' + r.bad + ' baris dilewati karena blok atau nomor kosong atau dobel' : '') + '.';
-    $('#b-imp-run').disabled = fresh === 0;
-  }
-
-  async function runImport() {
-    if (busy || !db) return;
-    var r = parseImport($('#imp-text').value);
-    var todo = r.rows.filter(function (x) { return !items.some(function (i) { return i.id === x.id; }); });
-    var m = $('#imp-msg'), done = 0;
-    busy = true; $('#b-imp-run').disabled = true;
-    try {
-      for (var k = 0; k < todo.length; k++) {
-        var row = todo[k], id = row.id;
-        delete row.id;
-        m.className = 'msg'; m.textContent = 'Mengimpor ' + (k + 1) + ' dari ' + todo.length + '…';
-        await db.doc('rumah/' + id).set(row);
-        done++;
-      }
-      $('#ov-import').hidden = true; $('#imp-text').value = '';
-      toast(done + ' rumah diimpor');
-    } catch (e) {
-      m.className = 'msg err';
-      m.textContent = done + ' rumah berhasil diimpor. ' + errMsg(e) + ' Tempel ulang daftarnya, yang sudah masuk akan dilewati.';
-    }
-    busy = false; $('#b-imp-run').disabled = false;
-  }
-
-  /* ---------- Ekspor ---------- */
-  function csvCell(v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; }
-  async function exportCsv() {
-    if (!dl) return;
-    var head = ['Blok', 'Nomor', 'Kepala Keluarga', 'Telepon', 'Jumlah Penghuni', 'Status', 'Jabatan', 'Catatan'];
-    var lines = [head.map(csvCell).join(',')];
-    sorted(items).forEach(function (it) {
-      lines.push([it.blok, it.nomor, it.kepala, it.telepon, it.jumlah, STATUS[it.status] || it.status, it.jabatan, it.catatan].map(csvCell).join(','));
-    });
-    try { await dl.save({ filename: 'warga-adiba-3.csv', data: '﻿' + lines.join('\r\n') }); toast('Daftar diunduh'); }
-    catch (e) { if (!e || e.code !== 'declined') toast('Unduhan belum bisa dilakukan di sini'); }
-  }
-
-  /* ---------- Mulai ---------- */
-  function wire() {
-    $('#q').addEventListener('input', render);
-    $('#f-blok').addEventListener('change', render);
-    $('#f-status').addEventListener('change', render);
-    $('#b-add').addEventListener('click', function () { openForm(null); });
-    $('#b-cancel').addEventListener('click', closeForm);
-    $('#form').addEventListener('submit', saveForm);
-    $('#b-delete').addEventListener('click', deleteHouse);
-    $('#b-export').addEventListener('click', exportCsv);
-    $('#b-import').addEventListener('click', function () { $('#imp-msg').textContent = ''; $('#b-imp-run').disabled = true; $('#ov-import').hidden = false; $('#imp-text').focus(); });
-    $('#b-imp-close').addEventListener('click', function () { $('#ov-import').hidden = true; });
-    $('#imp-text').addEventListener('input', previewImport);
-    $('#b-imp-run').addEventListener('click', runImport);
-    document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape') return;
-      if (!$('#ov-form').hidden) closeForm();
-      else if (!$('#ov-import').hidden) $('#ov-import').hidden = true;
-    });
-  }
-
-  async function init() {
-    wire();
-    var c = window.claude;
-    if (!c || typeof c.use !== 'function') { setNote('Halaman ini Hanyalah sample. Nantinya akan di kembangkan oleh pak WAWAN.', true); return; }
-    var res = await Promise.all([c.use('user'), c.use('db'), c.use('downloads')]);
-    var user = res[0]; db = res[1]; dl = res[2];
-    try { isAdmin = user ? await user.canEdit() : false; } catch (e) { isAdmin = false; }
-    var role = $('#role');
-    role.hidden = false;
-    role.textContent = isAdmin ? 'Masuk sebagai pengurus' : 'Masuk sebagai warga, hanya lihat';
-    role.className = 'role' + (isAdmin ? '' : ' read');
-    $('#b-add').hidden = !isAdmin;
-    $('#b-import').hidden = !isAdmin;
-    if (!db) { setNote('Masuk ke akun Anda untuk melihat data warga.', true); return; }
-
-    loadTimer = setTimeout(function () {
-      if (!loaded) setNote('Belum bisa menjangkau data. Periksa koneksi, halaman akan memuat otomatis saat tersambung.', true);
-    }, 10000);
-
-    db.collection('rumah').onSnapshot(function (snap) {
-      items = snap.docs.map(function (d) {
-        var v = d.data() || {};
-        return {
-          id: d.id, blok: String(v.blok || ''), nomor: String(v.nomor || ''),
-          kepala: v.kepala || '', telepon: v.telepon || '', jumlah: Number(v.jumlah) || 0,
-          status: normStatus(v.status), jabatan: v.jabatan || '', catatan: v.catatan || ''
-        };
-      });
-      if (!snap.metadata.fromCache || items.length) { loaded = true; clearTimeout(loadTimer); setNote(''); }
-      render();
-    }, function (e) {
-      clearTimeout(loadTimer);
-      setNote(e && e.code === 'revoked' ? 'Akses ke data dicabut. Muat ulang halaman.' : 'Data tidak bisa dimuat sekarang. Muat ulang halaman nanti.', true);
-    });
-  }
-
-  init();
-})();
-</script>
-
-</body></html>
+<script src="index.js"></script>
+</body>
+</html>
