@@ -1,0 +1,7 @@
+{
+  "hosting": [
+    { "target": "admin", "public": "admin", "ignore": ["firebase.json", "**/.*", "**/node_modules/**"] },
+    { "target": "warga", "public": "warga", "ignore": ["firebase.json", "**/.*", "**/node_modules/**"] }
+  ],
+  "firestore": { "rules": "firestore.rules" }
+}
