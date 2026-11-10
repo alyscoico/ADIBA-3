@@ -163,7 +163,7 @@ function buildShell() {
     VIEWS.map((v) => h('a', { href: '#' + v.id, 'data-v': v.id }, icon(v.icon), h('span', null, v.label))));
   mount(
     h('header', { class: 'bar' }, h('div', { class: 'bar-in' },
-      h('div', { class: 'brand' }, h('img', { class: 'logo', src: 'logo.png', alt: 'Logo Warga ADIBA 3', width: '44', height: '44' }), h('div', null, h('div', { class: 'eyebrow' }, 'Perumahan'), h('b', null, 'ADIBA 3'))),
+      h('div', { class: 'brand' }, h('img', { class: 'logo', src: 'logo.png', alt: 'Logo Warga ADIBA 3', width: '44', height: '44' }), h('div', { class: 'brand-text' }, h('div', { class: 'eyebrow' }, 'Perumahan'), h('b', null, 'ADIBA 3'), h('div', { class: 'addr' }, 'Kelurahan: JUNGKE, Kecamatan: KARANGANYAR, Kabupaten: KARANGANYAR'), h('a', { class: 'maplink', href: 'https://maps.app.goo.gl/vCXrAwGvA3D9S2md8', target: '_blank', rel: 'noopener' }, 'Buka lokasi di Google Maps'))),
       nav, h('div', { class: 'acct' }, avatar, menu))),
     h('main', { class: 'page', id: 'main' }));
 }
