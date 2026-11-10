@@ -102,7 +102,7 @@ function showLogin() {
   const p = h('input', { class: 'field', id: 'l-pass', type: 'password', autocomplete: 'current-password', required: true });
   const btn = h('button', { class: 'btn primary', type: 'submit' }, 'Masuk');
   const form = h('form', { class: 'login' },
-    h('div', { class: 'hero' }, h('span', { class: 'plate', style: 'align-self:flex-start' }, 'ADIBA 3'), h('h1', { style: 'margin-top:10px' }, 'Paguyuban ADIBA 3'),
+    h('div', { class: 'hero' }, h('img', { class: 'logo logo-lg', src: 'logo.png', alt: 'Logo Warga ADIBA 3', width: '96', height: '96' }), h('h1', { style: 'margin-top:10px' }, 'Paguyuban ADIBA 3'),
       h('div', { class: 'sub' }, 'Masuk dengan username dan password dari pengurus.')),
     h('label', { class: 'f', for: 'l-user' }, 'Username', u),
     h('label', { class: 'f', for: 'l-pass' }, 'Password', p),
@@ -163,7 +163,7 @@ function buildShell() {
     VIEWS.map((v) => h('a', { href: '#' + v.id, 'data-v': v.id }, icon(v.icon), h('span', null, v.label))));
   mount(
     h('header', { class: 'bar' }, h('div', { class: 'bar-in' },
-      h('div', { class: 'brand' }, h('span', { class: 'plate' }, 'A3'), h('div', null, h('div', { class: 'eyebrow' }, 'Perumahan'), h('b', null, 'ADIBA 3'))),
+      h('div', { class: 'brand' }, h('img', { class: 'logo', src: 'logo.png', alt: 'Logo Warga ADIBA 3', width: '44', height: '44' }), h('div', null, h('div', { class: 'eyebrow' }, 'Perumahan'), h('b', null, 'ADIBA 3'))),
       nav, h('div', { class: 'acct' }, avatar, menu))),
     h('main', { class: 'page', id: 'main' }));
 }

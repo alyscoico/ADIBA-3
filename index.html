@@ -7,11 +7,16 @@
 <meta name="theme-color" content="#1b6b55">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ADIBA 3">
+  <link rel="icon" href="logo.png" type="image/png">
+<link rel="apple-touch-icon" href="logo.png">
 <title>Warga ADIBA 3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap">
 <style>
+.logo { width: 44px; height: 44px; flex: none; object-fit: contain; display: block; }
+.logo-lg { width: 96px; height: 96px; align-self: flex-start; }
+  
 :root {
   color-scheme: light;
   --bg: #eef2ef; --surface: #ffffff; --surface-2: #f6f9f7; --ink: #14231d; --muted: #55665e; --line: #d3ddd7;
@@ -170,6 +175,12 @@ label.f .hint { font-weight: 400; color: var(--muted); }
   .grid-houses { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+  :root { --veil: rgba(238, 242, 239, .70); }
+@media (prefers-color-scheme: dark) { :root { --veil: rgba(14, 21, 18, .62); } }
+body::before { content: ""; position: fixed; inset: 0; z-index: -1;
+  background: linear-gradient(var(--veil), var(--veil)), url("latar.jpg") center 40% / cover no-repeat; }
+.login-wrap { background: linear-gradient(rgba(6, 28, 20, .45), rgba(6, 28, 20, .72)), url("latar.jpg") center 42% / cover no-repeat; }
+.login { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; box-shadow: 0 10px 40px rgba(0, 0, 0, .35); }
 </style>
 </head>
 <body>
